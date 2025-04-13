@@ -68,7 +68,7 @@ pipeline {
 
                 script {
 
-                    def service = sh(script: "kubectl get svc flask-app-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}:{.spec.ports[0].port}'", returnStdout: true).trim()
+                    def service = sh(script: "sudo -u davi kubectl get svc flask-app-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}:{.spec.ports[0].port}'", returnStdout: true).trim()
                     echo "${service}"
 
                     sh "k6 run -e SERVICE=localhost${service} acceptance-test.js"
