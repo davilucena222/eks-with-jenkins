@@ -13,6 +13,7 @@ pipeline {
     stages {
         stage('Setup') {
             steps {
+                sh 'whoami'
                 sh 'ls -la $KUBECONFIG'
                 sh 'chmod 644 $KUBECONFIG'
                 sh 'ls -la $KUBECONFIG'
