@@ -59,7 +59,7 @@ pipeline {
                 sh 'kubectl config use-context staging'
                 sh 'kubectl config current-context'
                 sh "sudo -u davi kubectl set image deployment/flask-app flask-app=${IMAGE_TAG}"
-                sh 'kubectl port-forward svc/flask-app-service 5000:5000'
+                sh 'sudo -u davi kubectl port-forward svc/flask-app-service 5000:5000'
             }
         }
 
@@ -82,7 +82,7 @@ pipeline {
                 sh 'kubectl config use-context prod'
                 sh 'kubectl config current-context'
                 sh "sudo -u davi kubectl set image deployment/flask-app flask-app=${IMAGE_TAG}"
-                sh 'kubectl port-forward svc/flask-app-service 5001:5000'
+                sh 'sudo -u davi kubectl port-forward svc/flask-app-service 5001:5000'
             }
         }       
 
