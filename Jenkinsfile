@@ -76,7 +76,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Prod'd)
+        stage('Deploy to Prodd')
         {
             steps {
                 sh 'kubectl config use-context prod'
