@@ -16,7 +16,7 @@ pipeline {
                 sh 'ls -la $KUBECONFIG'
                 sh 'chmod 644 $KUBECONFIG'
                 sh 'ls -la $KUBECONFIG'
-                sh "pip install -r requirements.txt"
+                sh "pip install --no-cache-dir -r requirements.txt"
             }
         }
         stage('Test') {
