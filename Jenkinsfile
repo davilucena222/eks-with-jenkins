@@ -56,9 +56,9 @@ pipeline {
         stage('Deploy to Staging')
         {
             steps {
-                sh 'kubectl config use-context staging'
-                sh 'kubectl config current-context'
-                sh "kubectl set image deployment/flask-app flask-app=${IMAGE_TAG}"
+                sh 'sudo kubectl config use-context staging'
+                sh 'sudo kubectl config current-context'
+                sh "sudo kubectl set image deployment/flask-app flask-app=${IMAGE_TAG}"
             }
         }
 
@@ -78,9 +78,9 @@ pipeline {
         stage('Deploy to Prod')
         {
             steps {
-                sh 'kubectl config use-context prod'
-                sh 'kubectl config current-context'
-                sh "kubectl set image deployment/flask-app flask-app=${IMAGE_TAG}"
+                sh 'sudo kubectl config use-context prod'
+                sh 'sudo kubectl config current-context'
+                sh "sudo kubectl set image deployment/flask-app flask-app=${IMAGE_TAG}"
             }
         }       
 
