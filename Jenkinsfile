@@ -2,12 +2,11 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'sanjeevkt720/jenkins-flask-app'
+        IMAGE_NAME = 'davilucena/jenkins-flask-app'
         IMAGE_TAG = "${IMAGE_NAME}:${env.GIT_COMMIT}"
         KUBECONFIG = credentials('kubeconfig-credentials-id')
-        AWS_ACCESS_KEY_ID = credentials('aws-access-key')
-        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-key')
-        
+        // AWS_ACCESS_KEY_ID = credentials('aws-access-key')
+        // AWS_SECRET_ACCESS_KEY = credentials('aws-secret-key')  
     }
 
     
@@ -57,7 +56,7 @@ pipeline {
         stage('Deploy to Staging')
         {
             steps {
-                sh 'kubectl config use-context user@staging.us-east-1.eksctl.io'
+                sh 'kubectl config use-context staging'
                 sh 'kubectl config current-context'
                 sh "kubectl set image deployment/flask-app flask-app=${IMAGE_TAG}"
             }
@@ -72,14 +71,14 @@ pipeline {
                     def service = sh(script: "kubectl get svc flask-app-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}:{.spec.ports[0].port}'", returnStdout: true).trim()
                     echo "${service}"
 
-                    sh "k6 run -e SERVICE=${service} acceptance-test.js"
+                    sh "k6 run -e SERVICE=localhost${service} acceptance-test.js"
                 }
             }
         }
         stage('Deploy to Prod')
         {
             steps {
-                sh 'kubectl config use-context user@prod.us-east-1.eksctl.io'
+                sh 'kubectl config use-context prod'
                 sh 'kubectl config current-context'
                 sh "kubectl set image deployment/flask-app flask-app=${IMAGE_TAG}"
             }
