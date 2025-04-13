@@ -58,7 +58,7 @@ pipeline {
             steps {
                 sh 'kubectl config use-context staging'
                 sh 'kubectl config current-context'
-                sh "kubectl set image deployment/flask-app flask-app=${IMAGE_TAG}"
+                sh "sudo -u davi kubectl set image deployment/flask-app flask-app=${IMAGE_TAG}"
             }
         }
 
@@ -80,7 +80,7 @@ pipeline {
             steps {
                 sh 'kubectl config use-context prod'
                 sh 'kubectl config current-context'
-                sh "kubectl set image deployment/flask-app flask-app=${IMAGE_TAG}"
+                sh "sudo -u davi kubectl set image deployment/flask-app flask-app=${IMAGE_TAG}"
             }
         }       
 
